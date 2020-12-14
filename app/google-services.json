@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "312645889988",
+    "firebase_url": "https://truinichatbot-febo.firebaseio.com",
+    "project_id": "truinichatbot-febo",
+    "storage_bucket": "truinichatbot-febo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312645889988:android:9cdf458f0e1554fbb5be91",
+        "android_client_info": {
+          "package_name": "com.example.realdatabasefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312645889988-00uagggq90ebbongmnnu7atj46020cbp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbyCxNEjmGsSr1N0Ap0hVNRGIodLf3bUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312645889988-00uagggq90ebbongmnnu7atj46020cbp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
