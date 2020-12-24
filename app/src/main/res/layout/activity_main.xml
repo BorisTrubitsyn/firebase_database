@@ -55,8 +55,8 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClickDelete"
-            android:text="Delete"
+            android:onClick="onClickRead"
+            android:text="Read"
             tools:layout_editor_absoluteX="193dp"
             tools:layout_editor_absoluteY="542dp" />
     </LinearLayout>
