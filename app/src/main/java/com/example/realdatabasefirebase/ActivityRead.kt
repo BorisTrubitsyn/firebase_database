@@ -1,65 +1,52 @@
-package com.example.realdatabasefirebase;
+package com.example.realdatabasefirebase
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.ArrayAdapter
+import com.google.firebase.database.DatabaseReference
+import android.os.Bundle
+import android.widget.ListView
+import com.example.realdatabasefirebase.R
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import java.util.ArrayList
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class ActivityRead extends AppCompatActivity {
-    private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
-    private List<String> listData;
-    private DatabaseReference mDB;
-    private String USER_KEY = "USER_KEY";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_read);
-        init();
-        getDataFormDb();
+class ActivityRead : AppCompatActivity() {
+    private var listView: ListView? = null
+    private var arrayAdapter: ArrayAdapter<String>? = null
+    private var listData: MutableList<String>? = null
+    private var mDB: DatabaseReference? = null
+    private val USER_KEY = "USER"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_read)
+        init()
+        dataFormDb
     }
 
-    private void init() {
-        listView = findViewById(R.id.listView);
-        listData = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        listView.setAdapter(arrayAdapter);
-        mDB = FirebaseDatabase.getInstance().getReference(USER_KEY);
+    private fun init() {
+        listView = findViewById(R.id.listView)
+        listData = ArrayList()
+        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listData!!)
+        listView!!.setAdapter(arrayAdapter)
+        mDB = FirebaseDatabase.getInstance().getReference(USER_KEY)
     }
 
-    private void getDataFormDb() {
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (listData.size() > 0) listData.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    User user = ds.getValue(User.class);
-                    assert user != null;
-
-                    listData.add(user.name);
+    private val dataFormDb: Unit
+        private get() {
+            val valueEventListener: ValueEventListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (listData!!.size > 0) listData!!.clear()
+                    for (ds in dataSnapshot.children) {
+                        val user = ds.getValue(User::class.java)!!
+                        listData!!.add(user.name)
+                    }
+                    arrayAdapter!!.notifyDataSetChanged()
                 }
-                arrayAdapter.notifyDataSetChanged();
 
+                override fun onCancelled(databaseError: DatabaseError) {}
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        mDB.addValueEventListener(valueEventListener);
-    }
+            mDB!!.addValueEventListener(valueEventListener)
+        }
 }
