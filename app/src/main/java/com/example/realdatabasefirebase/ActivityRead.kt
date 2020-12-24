@@ -17,7 +17,7 @@ class ActivityRead : AppCompatActivity() {
     private var arrayAdapter: ArrayAdapter<String>? = null
     private var listData: MutableList<String>? = null
     private var mDB: DatabaseReference? = null
-    private val USER_KEY = "USER"
+    private val SmartBrotherTechBot = "TOKEN"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read)
@@ -29,18 +29,21 @@ class ActivityRead : AppCompatActivity() {
         listView = findViewById(R.id.listView)
         listData = ArrayList()
         arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listData!!)
-        listView!!.setAdapter(arrayAdapter)
-        mDB = FirebaseDatabase.getInstance().getReference(USER_KEY)
+        listView!!.adapter = arrayAdapter
+        mDB = FirebaseDatabase.getInstance().getReference(SmartBrotherTechBot)
     }
 
     private val dataFormDb: Unit
-        private get() {
+        get() {
             val valueEventListener: ValueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                     if (listData!!.size > 0) listData!!.clear()
+
                     for (ds in dataSnapshot.children) {
-                        val user = ds.getValue(User::class.java)!!
-                        listData!!.add(user.name)
+                        val user = ds.getValue(Token::class.java)!!
+                        listData!!.add(user.token)
+
                     }
                     arrayAdapter!!.notifyDataSetChanged()
                 }

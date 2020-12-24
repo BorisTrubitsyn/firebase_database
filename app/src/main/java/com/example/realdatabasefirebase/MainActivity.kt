@@ -11,13 +11,11 @@ import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity : AppCompatActivity() {
-    private var name: EditText? = null
-    private var secondName: EditText? = null
     private var email: EditText? = null
     private var save: Button? = null
     private var delete: Button? = null
     private var myDB: DatabaseReference? = null
-    private val USER_KEY = "USER"
+    private val TOKEN = "TOKEN"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,23 +23,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onClick() {
-        name = findViewById(R.id.Name)
-        secondName = findViewById(R.id.Second)
         email = findViewById(R.id.email)
         save = findViewById(R.id.save)
         delete = findViewById(R.id.delete)
-        myDB = FirebaseDatabase.getInstance().getReference(USER_KEY)
+        myDB = FirebaseDatabase.getInstance().getReference(TOKEN)
     }
 
     fun onClickSave(view: View?) {
         val userDatabase = myDB!!.push()
-
-        val id = userDatabase.key
-        val nameUser = name!!.text.toString()
-        val secondNameUser = secondName!!.text.toString()
-        val emailUser = email!!.text.toString()
-        val newUser = User(id, nameUser, secondNameUser, emailUser)
-        userDatabase.setValue(newUser)
+        val token = email!!.text.toString()
+        val newToken = Token(token)
+        userDatabase.setValue(newToken)
     }
 
     fun onClickRead(view: View?) {
